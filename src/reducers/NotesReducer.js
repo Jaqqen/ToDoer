@@ -1,16 +1,27 @@
 export default function reducer(
   state={
-    note: {
-      noteContent: null,
-      noteId: null,
-    },
+    notes: [],
+    id: 0,
   }, action) {
 
   switch (action.type) {
+    default:
+      return state;
     case "SET_NOTE_CONTENT": {
       return {
         ...state,
-        note: {...state.note, noteContent: action.payload},
+        notes:
+        [ 
+          ...state.notes,
+          {
+            note:
+              {
+                content: action.payload,
+                id: state.id + 1
+              }
+          }
+        ],
+        id: state.id +1,
       }
     }
   }

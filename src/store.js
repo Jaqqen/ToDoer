@@ -1,10 +1,23 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { createLogger } from 'redux-logger';
 
-import logger from 'redux-logger';
-import promise from 'redux-promise-middleWare';
-import reducer from 'reducers/mainReducer';
+import promise from 'redux-promise-middleware';
+import rootReducer from 'reducers/RootReducer';
 import thunk from 'redux-thunk';
 
-const middleware = applyMiddleware(promise(), thunk, logger());
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default createStore(reducer, middleware);
+const logger = createLogger(); // eslint-disable-line no-unused-vars
+
+
+const store = createStore(
+  rootReducer,
+  reduxDevTools(
+    applyMiddleware(
+      promise(),
+      thunk
+    )
+  )
+);
+
+export default store;
